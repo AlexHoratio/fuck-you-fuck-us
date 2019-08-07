@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/mask.bmp-e9ee3f2ed07cfeb3e1988ff11f3c01b9.res"
+
+[deps]
+
+source_file="res://Graphics/Menu/Buttons/Start/mask.bmp"
+dest_files=[ "res://.import/mask.bmp-e9ee3f2ed07cfeb3e1988ff11f3c01b9.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
