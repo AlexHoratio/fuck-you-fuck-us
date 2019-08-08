@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Graphics/Menu/logo.png" type="Texture" id=1]
 [ext_resource path="res://Graphics/Menu/logo_glow.png" type="Texture" id=2]
@@ -11,8 +11,12 @@
 [ext_resource path="res://Graphics/Menu/Buttons/Quit/mask.bmp" type="BitMap" id=9]
 [ext_resource path="res://Scripts/Buttons/quit.gd" type="Script" id=10]
 [ext_resource path="res://Graphics/Menu/Buttons/Quit/shadow.png" type="Texture" id=11]
-[ext_resource path="res://Graphics/Menu/Buttons/Settings/settings.png" type="Texture" id=12]
-[ext_resource path="res://Graphics/Menu/Buttons/Settings/shadow.png" type="Texture" id=13]
+[ext_resource path="res://Graphics/Menu/Buttons/SFX/normal.png" type="Texture" id=12]
+[ext_resource path="res://Scripts/Buttons/sfx.gd" type="Script" id=13]
+[ext_resource path="res://Graphics/Menu/Buttons/SFX/shadow.png" type="Texture" id=14]
+[ext_resource path="res://Graphics/Menu/Buttons/Settings/settings.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/Buttons/settings.gd" type="Script" id=16]
+[ext_resource path="res://Graphics/Menu/Buttons/Settings/shadow.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "tilt"
@@ -129,20 +133,40 @@ show_behind_parent = true
 texture = ExtResource( 11 )
 centered = false
 
+[node name="sfx" type="TextureButton" parent="."]
+margin_left = 100.0
+margin_top = 10.0
+margin_right = 131.0
+margin_bottom = 37.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 12 )
+script = ExtResource( 13 )
+
+[node name="shadow" type="Sprite" parent="sfx"]
+show_behind_parent = true
+texture = ExtResource( 14 )
+centered = false
+
+[node name="glow" type="Sprite" parent="sfx"]
+self_modulate = Color( 1, 0.607843, 0, 0.14902 )
+position = Vector2( 19.5, 11.5 )
+texture = ExtResource( 3 )
+
 [node name="settings" type="TextureButton" parent="."]
 margin_left = 18.0
 margin_top = 18.0
 margin_right = 38.0
 margin_bottom = 37.0
 rect_scale = Vector2( 2, 2 )
-texture_normal = ExtResource( 12 )
+texture_normal = ExtResource( 15 )
+script = ExtResource( 16 )
 
 [node name="shadow" type="Sprite" parent="settings"]
 show_behind_parent = true
-texture = ExtResource( 13 )
+texture = ExtResource( 17 )
 centered = false
 
-[node name="Sprite" type="Sprite" parent="settings"]
+[node name="glow" type="Sprite" parent="settings"]
 self_modulate = Color( 1, 0.607843, 0, 0.14902 )
 position = Vector2( 9, 7.5 )
 texture = ExtResource( 3 )
@@ -151,3 +175,7 @@ texture = ExtResource( 3 )
 [connection signal="mouse_entered" from="quit" to="quit" method="_on_quit_mouse_entered"]
 [connection signal="mouse_exited" from="quit" to="quit" method="_on_quit_mouse_exited"]
 [connection signal="pressed" from="quit" to="quit" method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="sfx" to="sfx" method="_on_sfx_mouse_entered"]
+[connection signal="mouse_exited" from="sfx" to="sfx" method="_on_sfx_mouse_exited"]
+[connection signal="mouse_entered" from="settings" to="settings" method="_on_settings_mouse_entered"]
+[connection signal="mouse_exited" from="settings" to="settings" method="_on_settings_mouse_exited"]
