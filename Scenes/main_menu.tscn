@@ -71,6 +71,10 @@ hue_variation_random = 0.37
 
 [node name="main_menu" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 480, 110 )
 rotation = -0.0091125
@@ -177,5 +181,7 @@ texture = ExtResource( 3 )
 [connection signal="pressed" from="quit" to="quit" method="_on_quit_pressed"]
 [connection signal="mouse_entered" from="sfx" to="sfx" method="_on_sfx_mouse_entered"]
 [connection signal="mouse_exited" from="sfx" to="sfx" method="_on_sfx_mouse_exited"]
+[connection signal="pressed" from="sfx" to="sfx" method="_on_sfx_pressed"]
 [connection signal="mouse_entered" from="settings" to="settings" method="_on_settings_mouse_entered"]
 [connection signal="mouse_exited" from="settings" to="settings" method="_on_settings_mouse_exited"]
+[connection signal="pressed" from="settings" to="settings" method="_on_settings_pressed"]
