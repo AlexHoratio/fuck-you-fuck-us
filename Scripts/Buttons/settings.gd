@@ -17,6 +17,8 @@ func _on_settings_mouse_exited():
 	target_position.x = 18
 
 func _on_settings_pressed():
+	disabled = true
+	
 	scrolled = not(scrolled)
 	
 	if get_node("../arrow").scrolled:
@@ -27,3 +29,6 @@ func _on_settings_pressed():
 		get_node("AnimationPlayer").play("scroll")
 	else:
 		get_node("AnimationPlayer").play("unscroll")
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	disabled = false

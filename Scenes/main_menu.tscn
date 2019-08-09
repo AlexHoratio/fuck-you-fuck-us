@@ -159,7 +159,6 @@ tracks/1/keys = {
 [node name="main_menu" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -784, 0 )
 anchor_mode = 0
 current = true
 
@@ -300,6 +299,7 @@ anims/unscroll = SubResource( 10 )
 [connection signal="mouse_entered" from="settings" to="settings" method="_on_settings_mouse_entered"]
 [connection signal="mouse_exited" from="settings" to="settings" method="_on_settings_mouse_exited"]
 [connection signal="pressed" from="settings" to="settings" method="_on_settings_pressed"]
+[connection signal="animation_finished" from="settings/AnimationPlayer" to="settings" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="mouse_entered" from="arrow" to="arrow" method="_on_arrow_mouse_entered"]
 [connection signal="mouse_exited" from="arrow" to="arrow" method="_on_arrow_mouse_exited"]
 [connection signal="pressed" from="arrow" to="arrow" method="_on_arrow_pressed"]
