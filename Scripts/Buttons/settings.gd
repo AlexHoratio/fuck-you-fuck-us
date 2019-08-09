@@ -1,6 +1,7 @@
 extends TextureButton
 
 var target_position = Vector2(18, 18)
+var scrolled = false
 
 func _ready():
 	pass
@@ -16,4 +17,13 @@ func _on_settings_mouse_exited():
 	target_position.x = 18
 
 func _on_settings_pressed():
-	pass
+	scrolled = not(scrolled)
+	
+	if get_node("../arrow").scrolled:
+		get_node("../arrow/AnimationPlayer").play("unscroll")
+		get_node("../arrow").scrolled = false
+		scrolled = not(scrolled)
+	if scrolled:
+		get_node("AnimationPlayer").play("scroll")
+	else:
+		get_node("AnimationPlayer").play("unscroll")
