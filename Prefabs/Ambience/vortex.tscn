@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=1]
+[ext_resource path="res://test.png" type="Texture" id=1]
 
 [sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 0, 0, 1, 0.0878906, 0, 0, 1 )
@@ -15,8 +15,6 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.48745, 1 ), 0.0, 0.0, 0, 0
 curve = SubResource( 7 )
 
 [sub_resource type="ParticlesMaterial" id=9]
-emission_shape = 2
-emission_box_extents = Vector3( 960, 540, 1 )
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -36,19 +34,10 @@ color_ramp = SubResource( 6 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
-[node name="ParallaxBackground" type="ParallaxBackground"]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2( 0.2, 0.2 )
-motion_mirroring = Vector2( 1920, 1080 )
-
-[node name="Particles2D" type="Particles2D" parent="ParallaxLayer"]
-self_modulate = Color( 1, 1, 1, 0.0666667 )
-position = Vector2( 960, 540 )
-amount = 128
-lifetime = 4.0
-preprocess = 4.0
-speed_scale = 0.5
-visibility_rect = Rect2( -923.64, -533.819, 1948.06, 1177.18 )
+[node name="Particles2D" type="Particles2D"]
+position = Vector2( 1000, 532 )
+amount = 100
+speed_scale = 0.2
+visibility_rect = Rect2( -5000.33, -1700.76, 7800, 5000.31 )
 process_material = SubResource( 9 )
 texture = ExtResource( 1 )

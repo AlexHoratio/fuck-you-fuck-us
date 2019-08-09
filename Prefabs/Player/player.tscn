@@ -1,0 +1,132 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Prefabs/Player/player.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/Misc/glow.png" type="Texture" id=2]
+[ext_resource path="res://Graphics/Misc/small_circle.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0984083, 0.6892 ), 1.22712, 1.22712, 0, 0, Vector2( 0.606673, 0.0116 ), -7.41279, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+angular_velocity = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 120.0
+angle = 720.0
+angle_random = 1.0
+scale = 8.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+hue_variation = -0.21
+hue_variation_random = 1.0
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.32206, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 75.0
+initial_velocity_random = 1.0
+angular_velocity = 1.05
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 50.0
+damping_random = 1.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+hue_variation_random = 1.0
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 9.00669
+
+[node name="player" type="RigidBody2D"]
+position = Vector2( 200, 154.653 )
+mass = 0.1
+gravity_scale = 0.0
+script = ExtResource( 1 )
+
+[node name="particles" type="Node2D" parent="."]
+
+[node name="col" type="Particles2D" parent="particles"]
+self_modulate = Color( 1, 1, 1, 0.0588235 )
+amount = 4
+lifetime = 2.0
+local_coords = false
+process_material = SubResource( 5 )
+texture = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( -2.5, -2.653 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
+
+[node name="Particles2D2" type="Particles2D" parent="particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( 2, -2.653 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
+
+[node name="Particles2D3" type="Particles2D" parent="particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( 2, 3.347 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
+
+[node name="Particles2D4" type="Particles2D" parent="particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( -2.5, 3.347 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+drag_margin_left = 0.4
+drag_margin_top = 0.4
+drag_margin_right = 0.4
+drag_margin_bottom = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 11 )

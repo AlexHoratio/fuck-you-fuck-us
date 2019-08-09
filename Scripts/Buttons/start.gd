@@ -14,3 +14,11 @@ func _on_start_mouse_entered():
 
 func _on_start_mouse_exited():
 	target_position.x = 0
+
+func _on_start_pressed():
+	if not(get_node("../settings").disabled):
+		get_node("AnimationPlayer").play("scroll")
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "scroll":
+		get_tree().change_scene("res://Scenes/level_selector.tscn")
