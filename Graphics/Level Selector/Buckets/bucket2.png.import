@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bucket1.png-45ec2be09e75731ff5ec3612a8a534c2.stex"
+path="res://.import/bucket2.png-a7fdffd73a0f9d63249b7b601e831544.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Level Selector/Buckets/Shadows/bucket1.png"
-dest_files=[ "res://.import/bucket1.png-45ec2be09e75731ff5ec3612a8a534c2.stex" ]
+source_file="res://Graphics/Level Selector/Buckets/bucket2.png"
+dest_files=[ "res://.import/bucket2.png-a7fdffd73a0f9d63249b7b601e831544.stex" ]
 
 [params]
 

@@ -19,8 +19,6 @@ func _ready():
 
 func _physics_process(delta):
 	
-	print(position)
-	
 	if(Input.is_action_pressed("ui_left")):
 		linear_velocity.x -= SPEED*delta
 		if(linear_velocity.x > 0):
