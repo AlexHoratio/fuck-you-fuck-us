@@ -3,6 +3,8 @@ extends Area2D
 export(int) var stage = 1
 export(int) var level = 1
 
+export(bool) var enabled = false
+
 var modulates = {
 	"disabled": Color("ac3232"),
 	"enabled": Color("6abe30")
@@ -13,7 +15,10 @@ var bucket_sprites_path = "res://Graphics/Level Selector/Buckets/"
 func _ready():
 	randomize()
 	set_random_bucket_sprite()
-	enable()
+	if enabled:
+		enable()
+	else:
+		disable()
 
 func set_random_bucket_sprite() -> void:
 	var list_of_sprites = get_list_of_bucket_sprites()
@@ -46,5 +51,5 @@ func disable() -> void:
 	get_node("Sprite/shadow").self_modulate = modulates["disabled"]
 
 func _on_bucket_body_entered(body):
-	if body == get_tree().get_meta("player"):
+	if body == get_tree().get_meta("player") and enabled:
 		body.enter_catatonia(stage, level)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Graphics/Misc/glow.png" type="Texture" id=1]
 [ext_resource path="res://Graphics/Misc/small_circle.png" type="Texture" id=2]
@@ -12,7 +12,11 @@ func _ready():
 	$Sprite.rotation = movement_vector.angle()
 
 func _process(delta):
-	position += movement_vector"
+	position += movement_vector
+
+func _on_bullet_body_entered(body):
+	if not(body == get_tree().get_meta(\"player\")):
+		queue_free()"
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.874074, 0.918519 )
@@ -54,6 +58,10 @@ orbit_velocity_random = 0.0
 scale_curve = SubResource( 5 )
 color_ramp = SubResource( 3 )
 
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 7.0
+height = 16.0
+
 [node name="bullet" type="Area2D"]
 script = SubResource( 1 )
 
@@ -73,3 +81,9 @@ amount = 16
 lifetime = 0.2
 process_material = SubResource( 10 )
 texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -8, 0 )
+rotation = 1.5708
+shape = SubResource( 11 )
+[connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]

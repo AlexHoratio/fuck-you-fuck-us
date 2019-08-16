@@ -4,6 +4,8 @@
 [ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
 
+
+
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
 tracks/0/type = "value"
