@@ -1,11 +1,13 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=1]
-[ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Prefabs/Level Selector/bucket.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Environment/sprite_shadow_anim.gd" type="Script" id=5]
-[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up_shadow.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/level_selector.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
+[ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Level Selector/bucket.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/Environment/sprite_shadow_anim.gd" type="Script" id=6]
+[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up_shadow.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/Entities/villager_spawner.gd" type="Script" id=8]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -22,19 +24,34 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Animation" id=2]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 0, 0, 1, 0.0878906, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.48745, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
 emission_box_extents = Vector3( 960, 540, 1 )
 flag_disable_z = true
@@ -51,24 +68,24 @@ linear_accel_random = 1.0
 damping = 195.3
 damping_random = 1.0
 scale = 8.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=8]
 colors = PoolColorArray( 1, 0, 0, 1, 0.0878906, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.48745, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=10]
-curve = SubResource( 9 )
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=12]
 emission_shape = 2
 emission_box_extents = Vector3( 40, 500, 1 )
 flag_disable_z = true
@@ -85,30 +102,8 @@ linear_accel_random = 1.0
 damping = 195.3
 damping_random = 1.0
 scale = 2.0
-scale_curve = SubResource( 10 )
-color_ramp = SubResource( 8 )
-hue_variation = -0.28
-hue_variation_random = 0.37
-
-[sub_resource type="ParticlesMaterial" id=12]
-emission_shape = 2
-emission_box_extents = Vector3( 500, 40, 1 )
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 10.0
-initial_velocity_random = 1.0
-angular_velocity = 720.0
-angular_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 1.0
-linear_accel = 100.0
-linear_accel_random = 1.0
-damping = 195.3
-damping_random = 1.0
-scale = 2.0
-scale_curve = SubResource( 10 )
-color_ramp = SubResource( 8 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
@@ -129,17 +124,42 @@ linear_accel_random = 1.0
 damping = 195.3
 damping_random = 1.0
 scale = 2.0
-scale_curve = SubResource( 10 )
-color_ramp = SubResource( 8 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
+[sub_resource type="ParticlesMaterial" id=14]
+emission_shape = 2
+emission_box_extents = Vector3( 500, 40, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+angular_velocity = 720.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+linear_accel = 100.0
+linear_accel_random = 1.0
+damping = 195.3
+damping_random = 1.0
+scale = 2.0
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+hue_variation = -0.28
+hue_variation_random = 0.37
+
+[sub_resource type="CircleShape2D" id=15]
+radius = 189.042
+
 [node name="level_selector" type="Node2D"]
+script = ExtResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-editor/display_folded = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 mouse_filter = 2
@@ -148,6 +168,7 @@ color = Color( 0, 0, 0, 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
 autoplay = "fade_in"
 anims/fade_in = SubResource( 1 )
+anims/fade_out = SubResource( 2 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 editor/display_folded = true
@@ -164,39 +185,47 @@ lifetime = 4.0
 preprocess = 4.0
 speed_scale = 0.5
 visibility_rect = Rect2( -923.64, -533.819, 1948.06, 1177.18 )
-process_material = SubResource( 6 )
-texture = ExtResource( 1 )
+process_material = SubResource( 7 )
+texture = ExtResource( 2 )
 
-[node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 960, 540 )
+[node name="player" parent="." instance=ExtResource( 3 )]
+position = Vector2( -923, 605 )
 
 [node name="buckets" type="Node2D" parent="."]
+editor/display_folded = true
 position = Vector2( -727, 719 )
 
-[node name="1" parent="buckets" instance=ExtResource( 3 )]
+[node name="1" type="Node2D" parent="buckets"]
+editor/display_folded = true
+
+[node name="1" parent="buckets/1" instance=ExtResource( 4 )]
 position = Vector2( 6, -50 )
 
-[node name="2" parent="buckets" instance=ExtResource( 3 )]
+[node name="2" parent="buckets/1" instance=ExtResource( 4 )]
 position = Vector2( -252, -50 )
+level = 2
 
-[node name="3" parent="buckets" instance=ExtResource( 3 )]
+[node name="3" parent="buckets/1" instance=ExtResource( 4 )]
 position = Vector2( -498, -50 )
+level = 3
 
-[node name="4" parent="buckets" instance=ExtResource( 3 )]
+[node name="4" parent="buckets/1" instance=ExtResource( 4 )]
 position = Vector2( -754, -50 )
+level = 4
 
 [node name="directions" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="up" type="Sprite" parent="directions"]
 editor/display_folded = true
 position = Vector2( 952, 328 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
-script = ExtResource( 5 )
+texture = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="shadow" type="Sprite" parent="directions/up"]
 show_behind_parent = true
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 
 [node name="Particles2D" type="Particles2D" parent="directions/up"]
 self_modulate = Color( 1, 1, 1, 0.211765 )
@@ -205,21 +234,21 @@ scale = Vector2( 0.5, 0.5 )
 amount = 100
 speed_scale = 0.2
 visibility_rect = Rect2( -5000.33, -1700.76, 7800, 5000.31 )
-process_material = SubResource( 11 )
-texture = ExtResource( 1 )
+process_material = SubResource( 12 )
+texture = ExtResource( 2 )
 
 [node name="right" type="Sprite" parent="directions"]
 editor/display_folded = true
 position = Vector2( 1274, 543 )
 rotation = 1.5708
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 flip_h = true
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="shadow" type="Sprite" parent="directions/right"]
 show_behind_parent = true
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 flip_h = true
 
 [node name="Particles2D" type="Particles2D" parent="directions/right"]
@@ -230,22 +259,22 @@ scale = Vector2( 0.5, 0.5 )
 amount = 100
 speed_scale = 0.2
 visibility_rect = Rect2( -5000.33, -1700.76, 7800, 5000.31 )
-process_material = SubResource( 12 )
-texture = ExtResource( 1 )
+process_material = SubResource( 13 )
+texture = ExtResource( 2 )
 
 [node name="left" type="Sprite" parent="directions"]
 editor/display_folded = true
 position = Vector2( 652, 540 )
 rotation = 1.5708
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 flip_h = true
 flip_v = true
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="shadow" type="Sprite" parent="directions/left"]
 show_behind_parent = true
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 flip_h = true
 flip_v = true
 
@@ -257,21 +286,21 @@ scale = Vector2( 0.5, 0.5 )
 amount = 100
 speed_scale = 0.2
 visibility_rect = Rect2( -5000.33, -1700.76, 7800, 5000.31 )
-process_material = SubResource( 13 )
-texture = ExtResource( 1 )
+process_material = SubResource( 14 )
+texture = ExtResource( 2 )
 
 [node name="down" type="Sprite" parent="directions"]
 editor/display_folded = true
 position = Vector2( 952, 767 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 flip_h = true
 flip_v = true
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="shadow" type="Sprite" parent="directions/down"]
 show_behind_parent = true
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 flip_h = true
 flip_v = true
 
@@ -282,8 +311,18 @@ scale = Vector2( 0.5, 0.5 )
 amount = 100
 speed_scale = 0.2
 visibility_rect = Rect2( -5000.33, -1700.76, 7800, 5000.31 )
-process_material = SubResource( 11 )
-texture = ExtResource( 1 )
+process_material = SubResource( 12 )
+texture = ExtResource( 2 )
 
 [node name="-- REAL CAMERA EXTENTS --" type="Position2D" parent="."]
 position = Vector2( 960, 540 )
+
+[node name="villager_spawn_regions" type="Node2D" parent="."]
+
+[node name="left" type="CollisionShape2D" parent="villager_spawn_regions"]
+position = Vector2( -1104, 452 )
+shape = SubResource( 15 )
+script = ExtResource( 8 )
+
+[node name="villagers" type="Node2D" parent="."]
+[connection signal="animation_finished" from="CanvasLayer/ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

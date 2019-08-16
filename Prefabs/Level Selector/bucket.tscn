@@ -112,3 +112,4 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="walls"]
 position = Vector2( -5, 116 )
 shape = SubResource( 5 )
+[connection signal="body_entered" from="." to="." method="_on_bucket_body_entered"]

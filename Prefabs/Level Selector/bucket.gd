@@ -44,3 +44,7 @@ func enable() -> void:
 	
 func disable() -> void:
 	get_node("Sprite/shadow").self_modulate = modulates["disabled"]
+
+func _on_bucket_body_entered(body):
+	if body == get_tree().get_meta("player"):
+		body.enter_catatonia(stage, level)
