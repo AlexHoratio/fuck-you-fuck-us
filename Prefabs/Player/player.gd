@@ -14,6 +14,8 @@ var direction_focus = 0.95
 
 var catatonic = false
 
+onready var camera = $Camera2D
+
 func _ready():
 	linear_damp = 2.3
 	
