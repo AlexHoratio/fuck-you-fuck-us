@@ -4,8 +4,6 @@
 [ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
 
-
-
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
 tracks/0/type = "value"
@@ -21,7 +19,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=2]
 resource_name = "fade_out"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:self_modulate")
@@ -36,19 +34,19 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 0, 0, 1, 0.0878906, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.48745, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
 emission_box_extents = Vector3( 960, 540, 1 )
 flag_disable_z = true
@@ -65,8 +63,8 @@ linear_accel_random = 1.0
 damping = 195.3
 damping_random = 1.0
 scale = 8.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
@@ -84,7 +82,7 @@ color = Color( 0, 0, 0, 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
 autoplay = "fade_in"
 anims/fade_in = SubResource( 1 )
-anims/fade_out = SubResource( 14 )
+anims/fade_out = SubResource( 2 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 editor/display_folded = true
@@ -101,7 +99,7 @@ lifetime = 4.0
 preprocess = 4.0
 speed_scale = 0.5
 visibility_rect = Rect2( -923.64, -533.819, 1948.06, 1177.18 )
-process_material = SubResource( 6 )
+process_material = SubResource( 7 )
 texture = ExtResource( 2 )
 
 [node name="player" parent="." instance=ExtResource( 3 )]

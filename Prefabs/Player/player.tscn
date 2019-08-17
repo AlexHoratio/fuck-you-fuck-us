@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Prefabs/Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Misc/glow.png" type="Texture" id=2]
 [ext_resource path="res://Graphics/Misc/small_circle.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Entities/camera.gd" type="Script" id=4]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 0, 0, 1, 0, 0, 0, 1 )
@@ -127,6 +128,7 @@ drag_margin_left = 0.4
 drag_margin_top = 0.4
 drag_margin_right = 0.4
 drag_margin_bottom = 0.4
+script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 11 )

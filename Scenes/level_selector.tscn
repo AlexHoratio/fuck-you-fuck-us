@@ -1,12 +1,14 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/level_selector.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
-[ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Graphics/Level Selector/map.png" type="Texture" id=4]
-[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up.png" type="Texture" id=5]
-[ext_resource path="res://Scripts/Environment/sprite_shadow_anim.gd" type="Script" id=6]
-[ext_resource path="res://Prefabs/Level Selector/bucket.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Prefabs/Player/player.gd" type="Script" id=3]
+[ext_resource path="res://Graphics/Misc/glow.png" type="Texture" id=4]
+[ext_resource path="res://Graphics/Misc/small_circle.png" type="Texture" id=5]
+[ext_resource path="res://Graphics/Level Selector/map.png" type="Texture" id=6]
+[ext_resource path="res://Graphics/Level Selector/Arrows/arrow_up.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/Environment/sprite_shadow_anim.gd" type="Script" id=8]
+[ext_resource path="res://Prefabs/Level Selector/bucket.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -72,6 +74,66 @@ color_ramp = SubResource( 4 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
+[sub_resource type="Gradient" id=8]
+colors = PoolColorArray( 1, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0984083, 0.6892 ), 1.22712, 1.22712, 0, 0, Vector2( 0.606673, 0.0116 ), -7.41279, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+angular_velocity = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 120.0
+angle = 720.0
+angle_random = 1.0
+scale = 8.0
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+hue_variation = -0.21
+hue_variation_random = 1.0
+
+[sub_resource type="Gradient" id=13]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=14]
+gradient = SubResource( 13 )
+
+[sub_resource type="Curve" id=15]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.32206, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=17]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 75.0
+initial_velocity_random = 1.0
+angular_velocity = 1.05
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 50.0
+damping_random = 1.0
+scale_curve = SubResource( 16 )
+color_ramp = SubResource( 14 )
+hue_variation_random = 1.0
+
+[sub_resource type="CircleShape2D" id=18]
+radius = 9.00669
+
 [node name="level_selector" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -107,8 +169,69 @@ visibility_rect = Rect2( -923.64, -533.819, 1948.06, 1177.18 )
 process_material = SubResource( 7 )
 texture = ExtResource( 2 )
 
-[node name="player" parent="." instance=ExtResource( 3 )]
+[node name="player" type="RigidBody2D" parent="."]
 position = Vector2( 480, 273 )
+mass = 0.1
+gravity_scale = 0.0
+script = ExtResource( 3 )
+
+[node name="particles" type="Node2D" parent="player"]
+
+[node name="col" type="Particles2D" parent="player/particles"]
+self_modulate = Color( 1, 1, 1, 0.0588235 )
+amount = 4
+lifetime = 2.0
+local_coords = false
+process_material = SubResource( 12 )
+texture = ExtResource( 4 )
+
+[node name="Particles2D" type="Particles2D" parent="player/particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( -2.5, -2.653 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 17 )
+texture = ExtResource( 5 )
+
+[node name="Particles2D2" type="Particles2D" parent="player/particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( 2, -2.653 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 17 )
+texture = ExtResource( 5 )
+
+[node name="Particles2D3" type="Particles2D" parent="player/particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( 2, 3.347 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 17 )
+texture = ExtResource( 5 )
+
+[node name="Particles2D4" type="Particles2D" parent="player/particles"]
+self_modulate = Color( 1, 1, 1, 0.168627 )
+position = Vector2( -2.5, 3.347 )
+amount = 64
+lifetime = 0.05
+local_coords = false
+process_material = SubResource( 17 )
+texture = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="player"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+current = true
+zoom = Vector2( 1.2, 1.2 )
+smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource( 18 )
 
 [node name="-- REAL CAMERA EXTENTS --" type="Position2D" parent="."]
 position = Vector2( 960, 540 )
@@ -121,7 +244,7 @@ position = Vector2( 480, 270 )
 [node name="map" type="Sprite" parent="map"]
 position = Vector2( 462, 362 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map"]
 visible = false
@@ -136,8 +259,8 @@ editor/display_folded = true
 [node name="Sprite" type="Sprite" parent="arrows"]
 position = Vector2( 472, 109 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 5 )
-script = ExtResource( 6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
 shadow_colour = Color( 0.772549, 0, 0.4, 1 )
 
 [node name="shadow" type="Sprite" parent="arrows/Sprite"]
@@ -145,52 +268,52 @@ show_behind_parent = true
 
 [node name="buckets" type="Node2D" parent="."]
 
-[node name="bucket" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 763, -595 )
 rotation = 0.523598
 enabled = true
 
-[node name="bucket2" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket2" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 696, -697 )
 rotation = 1.309
 
-[node name="bucket3" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket3" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 675, -839 )
 rotation = 1.57079
 
-[node name="bucket4" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket4" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 723, -978 )
 rotation = 2.09439
 
-[node name="bucket5" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket5" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 866, -1048 )
 rotation = 2.87979
 
-[node name="bucket6" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket6" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1194, -1068 )
 rotation = 3.40339
 
-[node name="bucket7" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket7" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1027, -1073 )
 rotation = 3.14159
 
-[node name="bucket8" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket8" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1296, -999 )
 rotation = 4.18878
 
-[node name="bucket9" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket9" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1385, -836 )
 rotation = 4.18878
 
-[node name="bucket10" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket10" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1398, -734 )
 rotation = 4.97418
 
-[node name="bucket11" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket11" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1298, -639 )
 rotation = 5.75958
 
-[node name="bucket12" parent="buckets" instance=ExtResource( 7 )]
+[node name="bucket12" parent="buckets" instance=ExtResource( 9 )]
 position = Vector2( 1138, -576 )
 rotation = 6.02138
 [connection signal="animation_finished" from="CanvasLayer/ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

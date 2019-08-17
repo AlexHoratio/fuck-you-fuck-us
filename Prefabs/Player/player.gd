@@ -18,6 +18,7 @@ func _ready():
 	linear_damp = 2.3
 	
 	get_tree().set_meta("player", self)
+	get_tree().set_meta("camera", $Camera2D)
 
 func _physics_process(delta):
 	
