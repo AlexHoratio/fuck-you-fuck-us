@@ -1,8 +1,132 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Prefabs/Levels/level_boundaries.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.496881, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.74637, 0.489 ), 0.0, 0.0, 0, 0, Vector2( 0.945961, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.227941, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.823529, 0.823529, 0.823529, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+trail_divisor = 16
+trail_color_modifier = SubResource( 6 )
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, -250, 0 )
+initial_velocity = 250.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color = Color( 0.341176, 0.196078, 0.67451, 1 )
+hue_variation = 0.13
+hue_variation_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=9]
+trail_divisor = 16
+trail_color_modifier = SubResource( 6 )
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 250, 0 )
+initial_velocity = 250.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color = Color( 0.341176, 0.196078, 0.67451, 1 )
+hue_variation = 0.13
+hue_variation_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=7]
+trail_divisor = 16
+trail_color_modifier = SubResource( 6 )
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 250, 0, 0 )
+initial_velocity = 250.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color = Color( 0.341176, 0.196078, 0.67451, 1 )
+hue_variation = 0.13
+hue_variation_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=8]
+trail_divisor = 16
+trail_color_modifier = SubResource( 6 )
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( -250, 0, 0 )
+initial_velocity = 250.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 4 )
+color = Color( 0.341176, 0.196078, 0.67451, 1 )
+hue_variation = 0.13
+hue_variation_random = 1.0
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var rect_list = []
+
+func _ready():
+	pass
+
+func _process(delta):
+	update()
+	
+func _draw():
+	for rect in rect_list:
+		draw_rect(rect, Color(0, 0, 0, 1))"
 
 [node name="level_boundaries" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="particles" type="Node2D" parent="."]
+show_behind_parent = true
+
+[node name="top" type="Particles2D" parent="particles"]
+amount = 64
+visibility_rect = Rect2( -1000, -100, 2000, 200 )
+process_material = SubResource( 2 )
+texture = ExtResource( 2 )
+
+[node name="bottom" type="Particles2D" parent="particles"]
+amount = 64
+visibility_rect = Rect2( -1000, -100, 2000, 200 )
+process_material = SubResource( 9 )
+texture = ExtResource( 2 )
+
+[node name="right" type="Particles2D" parent="particles"]
+amount = 64
+visibility_rect = Rect2( -200, -1000, 400, 2000 )
+process_material = SubResource( 7 )
+texture = ExtResource( 2 )
+
+[node name="left" type="Particles2D" parent="particles"]
+amount = 64
+visibility_rect = Rect2( -200, -1000, 400, 2000 )
+process_material = SubResource( 8 )
+texture = ExtResource( 2 )
+
+[node name="walls" type="Node2D" parent="."]
+show_behind_parent = true
+script = SubResource( 1 )

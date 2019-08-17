@@ -116,7 +116,6 @@ position = Vector2( 0, 0 )
 position = Vector2( 960, 540 )
 
 [node name="tower" parent="." instance=ExtResource( 4 )]
-position = Vector2( 176, -8 )
 trail_enabled = true
 
 [node name="level_boundaries" parent="." instance=ExtResource( 5 )]
