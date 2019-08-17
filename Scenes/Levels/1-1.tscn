@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Levels/level.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Entities/Towers/tower.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Graphics/Misc/glow.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -69,6 +70,63 @@ color_ramp = SubResource( 4 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 0 ), 0.0, 21.8829, 0, 0, Vector2( 0.178783, 0.9796 ), 0.0, -3.00989, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0.257353, 0.404412, 0.639706 )
+colors = PoolColorArray( 0.331055, 0, 0.0574279, 1, 0.176222, 0, 0.581055, 1, 0, 0.186523, 0.135229, 1 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+trail_divisor = 9
+trail_color_modifier = SubResource( 12 )
+emission_shape = 2
+emission_box_extents = Vector3( 5, 1, 1 )
+flag_align_y = true
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 50.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_random = 1.0
+scale_curve = SubResource( 10 )
+
+[sub_resource type="Gradient" id=14]
+offsets = PoolRealArray( 0, 0.654412, 1 )
+colors = PoolColorArray( 0.6, 0.215686, 0.282353, 1, 0.562803, 0.199827, 0.262745, 0.926471, 0.0941176, 0, 0.0156863, 0 )
+
+[sub_resource type="GradientTexture" id=15]
+gradient = SubResource( 14 )
+
+[sub_resource type="Curve" id=16]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.11303, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+emission_shape = 2
+emission_box_extents = Vector3( 5, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 80.46
+damping = 20.0
+scale = 2.0
+scale_curve = SubResource( 17 )
+color_ramp = SubResource( 15 )
+
 [node name="level" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -110,6 +168,26 @@ position = Vector2( 0, 0 )
 [node name="-- REAL CAMERA EXTENTS --" type="Position2D" parent="."]
 position = Vector2( 960, 540 )
 
-[node name="Node2D" parent="." instance=ExtResource( 4 )]
-position = Vector2( 448, 228 )
+[node name="tower" parent="." instance=ExtResource( 4 )]
+position = Vector2( 69, 8 )
+
+[node name="tether" type="Node2D" parent="tower"]
+
+[node name="Particles2D" type="Particles2D" parent="tower/tether"]
+self_modulate = Color( 1, 1, 1, 0.0705882 )
+amount = 512
+lifetime = 2.0
+speed_scale = 2.0
+visibility_rect = Rect2( -10000, -100000, 200000, 200000 )
+local_coords = false
+process_material = SubResource( 8 )
+texture = ExtResource( 5 )
+
+[node name="Particles2D2" type="Particles2D" parent="tower/tether"]
+modulate = Color( 1, 1, 1, 0.0431373 )
+amount = 64
+visibility_rect = Rect2( -100000, -100000, 200000, 200000 )
+local_coords = false
+process_material = SubResource( 13 )
+texture = ExtResource( 2 )
 [connection signal="animation_finished" from="CanvasLayer/ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
