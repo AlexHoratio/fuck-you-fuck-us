@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Levels/level.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Entities/Towers/tower.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Prefabs/Levels/level_boundaries.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Entities/Towers/enemy_tower.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Levels/level_boundaries.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Entities/Enemies/enemy.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_in"
@@ -119,9 +121,21 @@ position = Vector2( 960, 540 )
 position = Vector2( -300, 312 )
 trail_enabled = true
 
-[node name="enemy_tower" parent="." instance=ExtResource( 4 )]
-position = Vector2( 622, -441 )
+[node name="enemy_tower" parent="." instance=ExtResource( 5 )]
+position = Vector2( 546, -506 )
 
-[node name="level_boundaries" parent="." instance=ExtResource( 5 )]
+[node name="level_boundaries" parent="." instance=ExtResource( 6 )]
 boundaries = SubResource( 8 )
+
+[node name="enemy" parent="." instance=ExtResource( 7 )]
+position = Vector2( 578, -439 )
+
+[node name="enemy2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 468, -507 )
+
+[node name="enemy3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 507, -447 )
+
+[node name="enemy4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 595, -563 )
 [connection signal="animation_finished" from="CanvasLayer/ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

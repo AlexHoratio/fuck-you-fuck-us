@@ -3,6 +3,8 @@ extends Node2D
 var camera
 var player
 
+var CHANCE_TO_SPAWN = 0.05
+
 export(bool) var trail_enabled = false
 
 #onready var softnoise_script = load("res://Scripts/softnoise.gd")
@@ -29,19 +31,14 @@ func _process(delta):
 	var distance_to_player = global_position.distance_to(player.global_position)
 	var angle_to_player = global_position.angle_to_point(player.global_position)
 	
-	$tether.visible = trail_enabled
-	
-	if trail_enabled:
-		get_node("tether/Particles2D").position = Vector2(-distance_to_player/2, 0).rotated(angle_to_player)
-		get_node("tether/Particles2D").rotation = angle_to_player
-		get_node("tether/Particles2D").process_material.emission_box_extents = Vector3(distance_to_player/2, 40 + distance_to_player*0.01, 0)
+#	if randf() < CHANCE_TO_SPAWN:
+#		spawn_enemy()
 		
-		get_node("tether/Particles2D2").position = get_node("tether/Particles2D").position
-		get_node("tether/Particles2D2").rotation = angle_to_player
-		get_node("tether/Particles2D2").process_material.emission_box_extents = get_node("tether/Particles2D").process_material.emission_box_extents
-		
-		get_node("tether/Particles2D3").emitting = global_position.distance_to(player.global_position) < 300
-	
+func spawn_enemy():
+	var enemy = load("res://Prefabs/Entities/Enemies/enemy.tscn").instance()
+	enemy.tower = self
+	enemy.position = position + Vector2(200, 0).rotated(randf()*2*PI)
+	get_parent().add_child(enemy)
 	
 #func _draw():
 #	var point_list = [[], []]
