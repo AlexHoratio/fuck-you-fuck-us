@@ -1,10 +1,78 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Entities/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Misc/white_square.png" type="Texture" id=2]
+[ext_resource path="res://Graphics/Misc/big_glow.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 3.72425, 0, 0, Vector2( 1, 0 ), -3.64645, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_curve = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 0, 0.228516, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0415646, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.71353, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+trail_divisor = 4
+trail_size_modifier = SubResource( 12 )
+trail_color_modifier = SubResource( 10 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_curve = SubResource( 8 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "explosion"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1.51572, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="enemy" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -15,3 +83,31 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="attack_charge" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Particles2D" type="Particles2D" parent="."]
+self_modulate = Color( 1, 0, 0.223529, 0.14902 )
+emitting = false
+amount = 1
+process_material = SubResource( 4 )
+texture = ExtResource( 3 )
+
+[node name="attack" type="Particles2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color( 1, 1, 1, 0.294118 )
+speed_scale = 0.4
+process_material = SubResource( 13 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="attack"]
+anims/explosion = SubResource( 14 )
+
+[node name="Sprite" type="Sprite" parent="attack"]
+modulate = Color( 1, 1, 1, 0.407843 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+[connection signal="body_entered" from="." to="." method="_on_enemy_body_entered"]
+[connection signal="timeout" from="attack_charge" to="." method="_on_attack_charge_timeout"]

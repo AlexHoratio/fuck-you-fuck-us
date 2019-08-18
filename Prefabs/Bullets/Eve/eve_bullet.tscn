@@ -105,7 +105,7 @@ scale_curve = SubResource( 6 )
 color_ramp = SubResource( 4 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 31.0161
 
 [node name="bullet" type="Area2D"]
 script = SubResource( 1 )
