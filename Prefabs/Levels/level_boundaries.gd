@@ -100,3 +100,4 @@ func _draw():
 			polyline.append(point)
 		
 		draw_polyline(polyline, Color(0.2, 0.2, 0.2, 1), 5)
+		

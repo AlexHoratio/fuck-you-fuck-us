@@ -36,19 +36,19 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 0, 0, 1, 0.0878906, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.48745, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=7]
-curve = SubResource( 6 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
 emission_box_extents = Vector3( 960, 540, 1 )
 flag_disable_z = true
@@ -65,12 +65,12 @@ linear_accel_random = 1.0
 damping = 195.3
 damping_random = 1.0
 scale = 8.0
-scale_curve = SubResource( 7 )
-color_ramp = SubResource( 5 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 hue_variation = -0.28
 hue_variation_random = 0.37
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=8]
 custom_solver_bias = 1.0
 extents = Vector2( 1000, 1000 )
 
@@ -106,7 +106,7 @@ lifetime = 4.0
 preprocess = 4.0
 speed_scale = 0.5
 visibility_rect = Rect2( -923.64, -533.819, 1948.06, 1177.18 )
-process_material = SubResource( 8 )
+process_material = SubResource( 7 )
 texture = ExtResource( 2 )
 
 [node name="player" parent="." instance=ExtResource( 3 )]
@@ -116,8 +116,12 @@ position = Vector2( 0, 0 )
 position = Vector2( 960, 540 )
 
 [node name="tower" parent="." instance=ExtResource( 4 )]
+position = Vector2( -300, 312 )
 trail_enabled = true
 
+[node name="enemy_tower" parent="." instance=ExtResource( 4 )]
+position = Vector2( 622, -441 )
+
 [node name="level_boundaries" parent="." instance=ExtResource( 5 )]
-boundaries = SubResource( 9 )
+boundaries = SubResource( 8 )
 [connection signal="animation_finished" from="CanvasLayer/ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

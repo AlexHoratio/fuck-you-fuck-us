@@ -7,7 +7,7 @@ extends RigidBody2D
 #PHYSICS VARIABLES
 var SPEED = 5000
 var MAX_SPEED = 500
-var KNOCKBACK = 600
+var KNOCKBACK = 5 #6000
 var BULLET_SPEED = 10
 var redirect_compensation = 5
 var direction_focus = 0.95
@@ -62,7 +62,7 @@ func _input(event):
 				var impulse = Vector2(1, 0).rotated(position.angle_to_point(get_global_mouse_position())) * KNOCKBACK
 				apply_impulse(Vector2(0, 0), impulse)
 				
-				var bullet = load("res://Prefabs/Bullets/player_bullet.tscn").instance()
+				var bullet = load("res://Prefabs/Bullets/Eve/eve_bullet.tscn").instance()
 				bullet.movement_vector = -impulse.normalized() * BULLET_SPEED
 				bullet.position = position
 				get_parent().add_child(bullet)
