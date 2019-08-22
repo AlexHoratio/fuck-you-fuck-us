@@ -22,6 +22,8 @@ var knockback_queued = false
 
 var alerted = false
 
+var HEALTH = 2
+
 func _ready():
 	add_to_group("enemies")
 	linear_damp = 2.3
@@ -66,18 +68,25 @@ func _physics_process(delta):
 	else:
 		movement_vector = Vector2(0, 0)
 
+func damage(amount):
+	HEALTH -= amount
+	get_node("Sprite/take_damage").play("take_damage")
+
 func fire_attack():
 	if get_tree().get_meta("player").position.distance_to(position) < 100:
 		get_tree().get_meta("player").apply_impulse(Vector2(0, 0), 50*Vector2(-1, 0).rotated(position.angle_to_point(get_tree().get_meta("player").position)))
 	
+		var lightning = load("res://Prefabs/Bullets/Adam/lightning.tscn").instance()
+		get_parent().add_child(lightning)
+		lightning.end_point = position
+	
 	can_move = true
 	get_node("Particles2D").emitting = false
-	get_node("attack").emitting = true
-	get_node("attack/AnimationPlayer").play("explosion")
-
-#func _on_enemy_body_entered(body):
-#	if body == get_tree().get_meta("player"):
-#		body.apply_impulse(Vector2(0, 0), Vector2(1, 0).rotated(position.angle_to_point(body.position)))
-
+	
+	var muzzleflash = load("res://Prefabs/Bullets/Adam/Muzzleflash/muzzleflash.tscn").instance()
+	#muzzleflash.position = position
+	add_child(muzzleflash)
+	
+	
 func _on_attack_charge_timeout():
 	fire_attack()

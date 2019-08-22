@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Graphics/Entities/Towers/layer1.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var texture
+
+func _ready():
+	$Particles2D.texture = texture
+	$Particles2D.emitting = true
+
+func _on_die_timeout():
+	queue_free()
+"
+
+[sub_resource type="Gradient" id=9]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="Curve" id=7]
+min_value = -200.0
+max_value = 200.0
+_data = [ Vector2( 0, 200 ), 0.0, 0.0, 0, 0, Vector2( 1, -200 ), 755.228, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.8982, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+min_value = -200.0
+max_value = 500.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 500 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -40.0
+radial_accel_curve = SubResource( 8 )
+tangential_accel = 100.0
+tangential_accel_random = 1.0
+tangential_accel_curve = SubResource( 6 )
+damping = 400.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 10 )
+
+[node name="kaboom" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource( 2 )
+texture = ExtResource( 1 )
+
+[node name="die" type="Timer" parent="."]
+one_shot = true
+autostart = true
+[connection signal="timeout" from="die" to="." method="_on_die_timeout"]

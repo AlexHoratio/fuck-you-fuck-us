@@ -78,6 +78,9 @@ func enter_catatonia(stage=1, level=1) -> void:
 	get_node("..").destination = "res://Scenes/Levels/" + str(stage) + "-" + str(level) + ".tscn"
 	get_node("../CanvasLayer/ColorRect/AnimationPlayer").play("fade_out")
 	
+func shake(amount=0.5):
+	$Camera2D.trauma += amount
+	
 func lerp_angle(from, to, weight):
 	return from + short_angle_dist(from, to) * weight
 

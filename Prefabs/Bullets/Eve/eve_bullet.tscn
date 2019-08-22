@@ -48,7 +48,7 @@ func _process(delta):
 	position += original_movement_vector*50*delta #shh
 	
 	scale -= Vector2(delta, delta)*2
-	if scale.x <= 0:
+	if scale.x <= 0 and not(spent):
 		die()
 
 func die():
@@ -61,8 +61,18 @@ func die():
 func _on_bullet_body_entered(body):
 	if not(spent):
 		if body in get_tree().get_nodes_in_group(\"enemies\"):
+			
 			if body.has_method(\"knockback\"):
 				body.knockback(original_movement_vector)
+				body.damage(1)
+				
+			var kaboom = load(\"res://Prefabs/Bullets/Eve/kaboom.tscn\").instance()
+			kaboom.position = position
+			kaboom.texture = $Sprite.texture
+			get_parent().add_child(kaboom)
+			
+			get_tree().get_meta(\"player\").shake()
+			
 		if not(body == get_tree().get_meta(\"player\")):
 			die()
 
@@ -70,29 +80,29 @@ func _on_die_timeout():
 	queue_free()
 "
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.213235, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 0.339844, 0.339844, 0.339844, 0.338235, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=6]
-curve = SubResource( 5 )
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
 
-[sub_resource type="Curve" id=8]
+[sub_resource type="Curve" id=6]
 max_value = 2.0
 _data = [ Vector2( 0.0166157, 1.682 ), 0.0, 0.632969, 0, 0, Vector2( 1, 0.8724 ), -0.758585, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=9]
-curve = SubResource( 8 )
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
 
-[sub_resource type="ParticlesMaterial" id=7]
+[sub_resource type="ParticlesMaterial" id=8]
 trail_divisor = 2
-trail_size_modifier = SubResource( 9 )
+trail_size_modifier = SubResource( 7 )
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -101,10 +111,10 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 50.0
 scale = 4.0
-scale_curve = SubResource( 6 )
-color_ramp = SubResource( 4 )
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=9]
 radius = 31.0161
 
 [node name="bullet" type="Area2D"]
@@ -125,11 +135,11 @@ show_behind_parent = true
 amount = 16
 lifetime = 0.5
 local_coords = false
-process_material = SubResource( 7 )
+process_material = SubResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 2 )
+shape = SubResource( 9 )
 
 [node name="die" type="Timer" parent="."]
 one_shot = true
